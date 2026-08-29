@@ -1,0 +1,80 @@
+---
+title: "zscores"
+format: html
+---
+
+## What is a z-score?
+
+Represents the number of standard deviations ($\sigma$) that a score ($x$) is from the mean ($\mu$).
+
+$$ z = \frac{x - \mu}{\sigma} $$
+
+z-scores across different distributions are comparable.
+
+```{r}
+score <- 20
+mu    <- 6
+SD    <- 2
+
+zscore <- (score - mu) / SD
+zscore
+```
+
+## Example
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+data(faithful)
+duration <- faithful$eruptions
+head(duration, 6)
+```
+
+```{r}
+# for easier viewing
+duration <- sort(duration, decreasing = TRUE)
+```
+
+### Compute z-scores
+
+```{r}
+z_duration <- (duration - mean(duration)) / sd(duration)
+head(z_duration)
+```
+
+### Visualization
+
+```{r}
+df <- data.frame(
+  duration = duration,
+  z = z_duration
+)
+```
+
+```{r}
+ggplot(df, aes(x = duration)) +
+  geom_histogram(bins = 20) +
+  geom_vline(xintercept = mean(duration), linetype = "dashed") +
+  labs(
+    title = "Eruption Durations with Mean Highlighted",
+    x = "Duration (minutes)",
+    y = "Count"
+  )
+```
+
+```{r}
+ggplot(df, aes(x = z)) +
+  geom_histogram(bins = 20) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(
+    title = "Z-Scores of Eruption Durations",
+    x = "Z-score",
+    y = "Count"
+  )
+```
+
+## To try on your own
+
+Calculate z-scores for eruption waiting times.

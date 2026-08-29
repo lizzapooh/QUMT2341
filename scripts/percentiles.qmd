@@ -1,0 +1,68 @@
+---
+title: "percentiles"
+format: html
+---
+
+## Percentiles
+
+-   Interpret what an nth percentile means in plain language.
+
+-   Use quantile() correctly with probability values.
+
+-   Connect numeric percentiles to the distribution of real data.
+
+![](images/clipboard-276145655.png)
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+data(faithful)
+```
+
+```{r}
+head(faithful)
+# View(faithful)
+summary(faithful)
+```
+
+## Guess
+
+Where do you think the 32nd percentile might fall? What about the 98th percentile?
+
+```{r}
+hist(faithful$eruptions, breaks = 20)
+```
+
+## Calculate and Interpret
+
+```{r}
+duration <- faithful$eruptions
+```
+
+```{r}
+quantile(duration, .32)
+```
+
+```{r}
+quantile(duration, c(.32, .57, .98))
+```
+
+## Visualization
+
+```{r}
+hist(duration, breaks = 20,
+     main = "Eruption Durations (minutes)",
+     xlab = "Duration")
+
+abline(v = quantile(duration, .32), col = "firebrick")
+abline(v = quantile(duration, .57), col = "steelblue")
+abline(v = quantile(duration, .98), col = "darkgreen")
+```
+
+## To try on your own
+
+Find the 17th, 43rd, 67th and 85th percentiles of the eruption **waiting periods** in `faithful`
+
+Use the code above to help write your code.

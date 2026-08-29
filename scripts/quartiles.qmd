@@ -1,0 +1,72 @@
+---
+title: "relativePosition"
+format: 
+  html: 
+    self-contained: true
+    toc: true             
+  pdf: 
+    number-sections: true 
+    toc: true            
+    pdf-engine: xelatex 
+editor: visual
+---
+
+## Quartiles and Interquartile Range
+
+Quartiles divide a sorted data set into four equal parts.
+
+- The lower quartile (Q1) cuts off the lowest 25 percent of values.
+
+- The median (Q2) cuts off the lowest 50 percent of values.
+
+- The upper quartile (Q3) cuts off the lowest 75 percent of values.
+
+The interquartile range (IQR) measures the spread of the middle 50 percent of the data.
+
+$$IQR = Q_3 - Q_1$$
+
+In this example, we will find the interquartile range of eruption duration in the data set faithful.
+
+```{r}
+data(faithful)
+duration <- faithful$eruptions
+summary(duration)
+```
+
+### Compute quartiles
+
+```{r}
+quantile(duration, c(
+  .25, # Q1
+  .50, # Median
+  .75  # Q3
+  ))
+```
+
+### Compute interquartile range
+
+```{r}
+IQR_duration <- IQR(duration)
+IQR_duration
+```
+
+The middle 50% of eruption durations spans about `IQR_duration`.
+
+### Box Plot
+
+```{r}
+
+library(ggplot2)
+
+ggplot(data.frame(duration), aes(x = "", y = duration)) +
+  geom_boxplot() +
+  labs(
+    title = "Box Plot of Eruption Duration",
+    y = "Duration (minutes)",
+    x = NULL
+  )
+```
+
+## To try on your own
+
+Find the interquartile range of eruption waiting periods. Use the code above as a template.
